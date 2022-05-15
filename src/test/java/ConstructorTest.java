@@ -1,4 +1,4 @@
-import com.PO.MainPage;
+import com.po.MainPage;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Test;

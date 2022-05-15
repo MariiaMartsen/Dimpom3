@@ -1,6 +1,8 @@
-import com.PO.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.po.*;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static com.codeborne.selenide.Selenide.*;
@@ -12,8 +14,25 @@ public class LoginUserTest {
             open("https://stellarburgers.nomoreparties.site/",
                     MainPage.class);
 
+    UserClient userClient;
+    User user;
+    String accessToken;
+    String userEmail;
+    String userPassword;
+
+    @Before
+    public void setUp() throws JsonProcessingException, io.qameta.allure.internal.shadowed.jackson.core.JsonProcessingException {
+        userClient = new UserClient();
+        user = UserGenerator.getRandomEmailPasswordName();
+        userEmail = user.getEmail();
+        userPassword = user.getPassword();
+        var createdUser =  userClient.create(user);
+        accessToken =  createdUser.extract().path("accessToken");
+    }
+
     @After
     public void tearDown() {
+        userClient.delete(accessToken);
         webdriver().driver().close();
     }
 
@@ -23,8 +42,8 @@ public class LoginUserTest {
     public void successLoginByLoginIntoAccButton() throws InterruptedException { // тест на успешный логин по кнопке "Войти в аккаунт" на главной
     mainPage.clickButtonPersonalAccountUnderList();
     LoginPage loginPage = page(LoginPage.class);
-    loginPage.setEmail("mashavikt@yandex.ru");
-    loginPage.setPassword("123456");
+    loginPage.setEmail(userEmail);
+    loginPage.setPassword(userPassword);
     loginPage.clickLoginButton();
     boolean isConstructBurgerTitleDisplayed = mainPage.isConstructBurgerTitleDisplayed();
     assertTrue("ConstructBurger Title not displayed after Login to Personal Acc by ButtonPersonalAccountUnderList", isConstructBurgerTitleDisplayed);
@@ -36,8 +55,8 @@ public class LoginUserTest {
     public void successLoginByButtonOnHeader() throws InterruptedException { // тест на успешный логин по кнопке "Личный кабинет" на главной
         mainPage.clickButtonPersonalAccountOnHeader();
         LoginPage loginPage = page(LoginPage.class);
-        loginPage.setEmail("mashavikt@yandex.ru");
-        loginPage.setPassword("123456");
+        loginPage.setEmail(userEmail);
+        loginPage.setPassword(userPassword);
         loginPage.clickLoginButton();
         boolean isConstructBurgerTitleDisplayed = mainPage.isConstructBurgerTitleDisplayed();
         assertTrue("ConstructBurger Title not displayed after Login to Personal Acc by ButtonPersonalAccountOnHeader on Main page", isConstructBurgerTitleDisplayed);
@@ -54,8 +73,8 @@ public class LoginUserTest {
         loginPage.clickRegisterLink();
         RegisterPage registerPage = page(RegisterPage.class);
         registerPage.clickPersonalAccOnRegistrationPage();
-        loginPage.setEmail("mashavikt@yandex.ru");
-        loginPage.setPassword("123456");
+        loginPage.setEmail(userEmail);
+        loginPage.setPassword(userPassword);
         loginPage.clickLoginButton();
         boolean isConstructBurgerTitleDisplayed = mainPage.isConstructBurgerTitleDisplayed();
         assertTrue("ConstructBurger Title not displayed after Login to Personal Acc by ButtonPersonalAccountOnHeader on registration page", isConstructBurgerTitleDisplayed);
@@ -72,8 +91,8 @@ public class LoginUserTest {
         loginPage.clickRecoverPasswordButton();
         ForgotPasswordPage forgotPasswordPage = page(ForgotPasswordPage.class);
         forgotPasswordPage.clickPersonalAccOnForgotPasswordPage();
-        loginPage.setEmail("mashavikt@yandex.ru");
-        loginPage.setPassword("123456");
+        loginPage.setEmail(userEmail);
+        loginPage.setPassword(userPassword);
         loginPage.clickLoginButton();
         boolean isConstructBurgerTitleDisplayed = mainPage.isConstructBurgerTitleDisplayed();
         assertTrue("ConstructBurger Title not displayed after Login to Personal Acc by ButtonPersonalAccountOnHeader on recover password page", isConstructBurgerTitleDisplayed);

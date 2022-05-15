@@ -1,4 +1,4 @@
-package com.PO;
+package com.po;
 
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
