@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class LoginUserTest {
 
     MainPage mainPage =
-            open("https://stellarburgers.nomoreparties.site/",
+            open(BurgerRestClient.BASE_URL,
                     MainPage.class);
 
     UserClient userClient;

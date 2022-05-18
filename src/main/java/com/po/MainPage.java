@@ -1,10 +1,12 @@
 package com.po;
 
+import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.How;
 
+import static com.codeborne.selenide.Condition.enabled;
 import static com.codeborne.selenide.Condition.visible;
 
 public class MainPage {
@@ -32,8 +34,37 @@ public class MainPage {
     @FindBy(how = How.XPATH, using = ".//div/ul[2]")
     public SelenideElement sauceTitleUnderTab;
 
+    @FindBy(how = How.XPATH, using = ".//span[@class='text text_type_main-default'][text()='Соусы']")
+    private SelenideElement saucesNotChosen;
+
+    @FindBy(how = How.CSS, using = ".BurgerIngredients_ingredients__menuContainer__Xu3Mo  > .text:nth-child(3)")
+    private SelenideElement saucesChosen;
+
     @FindBy(how = How.XPATH, using = ".//div/ul[3]")
     public SelenideElement fillingTitleUnderTab;
+
+    @FindBy(how = How.CLASS_NAME, using = "tab_tab_type_current__2BEPc")
+    public SelenideElement fillingChosenTab;
+
+
+    @FindBy(how = How.XPATH,using = ".//span[@class='text text_type_main-default']")
+    public ElementsCollection buttonsChosenType;
+
+
+
+    @FindBy(how = How.CLASS_NAME,using = "tab_tab_type_current__2BEPc")
+    public SelenideElement sectionChosenType;
+
+
+
+
+    @FindBy(how = How.XPATH, using = "//*[@id=\"root\"]/div/main/section[1]/div[1]/div[2]/span")
+    public SelenideElement s1;
+
+
+    @FindBy(how = How.XPATH, using = ".//h2[text()='Начинки']")
+    private SelenideElement fillingsHeader;
+
 
 
     @Step("Click ButtonPersonalAccountUnderList")
@@ -71,19 +102,35 @@ public class MainPage {
         return constructBurgerTitle.shouldBe(visible).isDisplayed();
     }
 
-    @Step("Check FillingTitleUnderTabDisplayed")
-    public boolean isFillingTitleUnderTabDisplayed() {
-        return fillingTitleUnderTab.shouldBe(visible).isDisplayed();
-    }
+//    @Step("Check FillingTitleUnderTabDisplayed")
+//    public boolean isFillingTitleUnderTabDisplayed() {
+//        return fillingTitleUnderTab.shouldBe(visible).isDisplayed();
+//    }
 
-    @Step("Check SauceTitleUnderTabDisplayed")
-    public boolean isSauceTitleUnderTabDisplayed() {
-        return sauceTitleUnderTab.shouldBe(visible).isDisplayed();
-    }
+//    @Step("Check SauceTitleUnderTabDisplayed")
+//    public boolean isSauceTitleUnderTabDisplayed() {
+//        return sauceTitleUnderTab.shouldBe(visible).isDisplayed();
+//    }
+//
+//    @Step("Check BunTitleUnderTabDisplayed")
+//    public boolean isBunTitleUnderTabDisplayed() {
+//        return bunTitleUnderTab.shouldBe(visible).isDisplayed();
+//    }
+//
+//    @Step("Check BunTitleUnderTabDisplayed")
+//    public boolean isChosenTitleSauceDisplayed() {
+//        return saucesChosen.isEnabled();
+//    }
+//
+//
+//    @Step("Check BunTitleUnderTabDisplayed")
+//    public boolean b1TabDisplayed() {
+//        return bunTitleUnderTab.isEnabled();
+//    }
 
     @Step("Check BunTitleUnderTabDisplayed")
-    public boolean isBunTitleUnderTabDisplayed() {
-        return bunTitleUnderTab.shouldBe(visible).isDisplayed();
+    public boolean isChosenClassEnabled() {
+        return sectionChosenType.isEnabled();
     }
 
 }

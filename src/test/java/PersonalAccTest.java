@@ -12,7 +12,7 @@ import static com.codeborne.selenide.WebDriverConditions.url;
 
 public class PersonalAccTest {
     MainPage mainPage =
-            open("https://stellarburgers.nomoreparties.site/",
+            open(BurgerRestClient.BASE_URL,
                     MainPage.class);
 
     UserClient userClient;
